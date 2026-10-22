@@ -1,67 +1,258 @@
-*{
+:root {
+    --bg-color: #0b132b;
+    --card-surface: #1c2541;
+    --color-x: #38bdf8;
+    --color-o: #f43f5e;
+    --color-ties: #a855f7;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --grid-gap: 12px;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
-body{
-    background-color: #548686;
+
+body {
+    background: radial-gradient(circle at top, #1e293b, #0b132b);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.game-wrapper {
+    width: min(100%, 460px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.header {
     text-align: center;
 }
-.container{
-    height: 70vh; /* vh stands for Viewport Height --  relative to screen height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.box{
-    height: 18vmin;  /*vmin Takes minimum of (width, height)*/
-    width: 18vmin;
-    border-radius: 1rem;
-    border: none;
-    box-shadow: 0 0 1rem rgba(0,0,0,0.3);
-    font-size: 8vmin;
-    color: #b0413b;
-    background-color: #ffffc7;
-}
-.game{
-    height: 60vmin;
-    width: 60vmin;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5vmin;
-}
-#reset-btn{
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: #191913;
-    color: #fff;
-    border-radius: 1rem;
-    border: none;
 
-}
-#msg{
-    color: #ffffc7;
-    font-size: 5vmin;
-}
-#new-btn{
-    color: #fff;
-    background-color: #191913;
-    padding: 1rem;
-    font-size: 1.25rem;
-    border-radius: 1rem;
-    border: none;
+.header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
-.msg-container {
-    height: 100vmin;
+.subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* Settings Bar */
+.settings-bar {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(28, 37, 65, 0.7);
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.control-group {
+    display: flex;
     align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.control-group select {
+    background: #0b132b;
+    color: var(--text-primary);
+    border: 1px solid #334155;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Scoreboard */
+.scoreboard {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.score-card {
+    background: var(--card-surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 10px 8px;
+    text-align: center;
+    display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 4px;
 }
 
-.hide {
+.player-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.score-x .player-label { color: var(--color-x); }
+.score-ties .player-label { color: var(--color-ties); }
+.score-o .player-label { color: var(--color-o); }
+
+.score-value {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+/* Turn Banner */
+.turn-banner {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.turn-banner.turn-x {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--color-x);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.turn-banner.turn-o {
+    background: rgba(244, 63, 94, 0.15);
+    color: var(--color-o);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+/* Board Grid */
+.board-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.box {
+    background: var(--card-surface);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    font-size: clamp(36px, 10vw, 54px);
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+}
+
+.box:not(:disabled):hover {
+    background: rgba(28, 37, 65, 0.9);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
+}
+
+.box:focus-visible {
+    outline: 3px solid var(--color-x);
+}
+
+.box.cell-x {
+    color: var(--color-x);
+}
+
+.box.cell-o {
+    color: var(--color-o);
+}
+
+.box.winning-cell {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: #22c55e;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+    to { box-shadow: 0 0 25px rgba(34, 197, 94, 0.7); }
+}
+
+/* Winner Message Box */
+.msg-container {
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.msg-container p {
+    font-size: 18px;
+    font-weight: 800;
+    color: #86efac;
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    padding: 10px 24px;
+    border-radius: 12px;
+}
+
+.msg-container.hide {
     display: none;
+}
+
+/* Button Bar */
+.button-bar {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s, opacity 0.15s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.primary-btn {
+    background: var(--color-x);
+    color: #0b132b;
+}
+
+.secondary-btn {
+    background: #334155;
+    color: var(--text-primary);
+}
+
+@media (max-width: 400px) {
+    .settings-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }

@@ -3,31 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
+    <title>Tic Tac Toe — Master Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="msg-container hide">
+    <div class="msg-container hide" role="alert">
         <p id="msg">Winner</p>
-        <button id="new-btn">New Game</button>
     </div>
-    <main>
-        <h1>Tic Tac Toe</h1>
-        <div class="container">
-            <div class="game">
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
-                <button class="box"></button>
+
+    <main class="game-wrapper" role="main">
+        <header class="header">
+            <h1>Tic Tac Toe</h1>
+            <p class="subtitle">Classic Strategy with Smart AI</p>
+        </header>
+
+        <!-- Controls: Mode and Difficulty -->
+        <section class="settings-bar" aria-label="Game Configuration">
+            <div class="control-group">
+                <label for="game-mode">Mode:</label>
+                <select id="game-mode">
+                    <option value="pvp">2 Players</option>
+                    <option value="ai" selected>vs AI</option>
+                </select>
             </div>
+            <div class="control-group">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty">
+                    <option value="hard" selected>Unbeatable (Minimax)</option>
+                    <option value="easy">Casual</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Scoreboard -->
+        <section class="scoreboard" aria-label="Scoreboard">
+            <div class="score-card score-x">
+                <span class="player-label">Player X</span>
+                <span id="score-x" class="score-value">0</span>
+            </div>
+            <div class="score-card score-ties">
+                <span class="player-label">Ties</span>
+                <span id="score-draw" class="score-value">0</span>
+            </div>
+            <div class="score-card score-o">
+                <span class="player-label">Player O</span>
+                <span id="score-o" class="score-value">0</span>
+            </div>
+        </section>
+
+        <!-- Live Turn Indicator -->
+        <div id="turn-indicator" class="turn-banner turn-x" aria-live="polite">Player X's Turn</div>
+
+        <!-- Board Grid -->
+        <section class="board-container" aria-label="Tic Tac Toe Board">
+            <div class="game">
+                <button class="box" aria-label="Board cell 1"></button>
+                <button class="box" aria-label="Board cell 2"></button>
+                <button class="box" aria-label="Board cell 3"></button>
+                <button class="box" aria-label="Board cell 4"></button>
+                <button class="box" aria-label="Board cell 5"></button>
+                <button class="box" aria-label="Board cell 6"></button>
+                <button class="box" aria-label="Board cell 7"></button>
+                <button class="box" aria-label="Board cell 8"></button>
+                <button class="box" aria-label="Board cell 9"></button>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="button-bar">
+            <button id="reset-btn" class="btn primary-btn">New Round</button>
+            <button id="reset-scores-btn" class="btn secondary-btn">Reset Scores</button>
         </div>
-        <button id="reset-btn">Reset Game</button>
     </main>
-    <script src="app.js"></script>
+
+    <script src="./audio.js"></script>
+    <script src="./app.js"></script>
 </body>
 </html>

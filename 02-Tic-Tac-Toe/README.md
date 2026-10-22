@@ -1,91 +1,35 @@
-# 🎮 Tic Tac Toe Game
+# Tic Tac Toe — Master Edition
 
-## 🌐 Live Demo
+A responsive, feature-rich Tic Tac Toe game built with vanilla JavaScript, HTML5, and CSS3.
 
-👉 [https://jaikaran109.github.io/Tic-Tac-Toe/](https://jaikaran109.github.io/Tic-Tac-Toe/)
+## 📋 Overview
 
-A simple and responsive Tic Tac Toe game built using **HTML, CSS, and JavaScript**.
+Tic Tac Toe Master Edition upgrades the classic 3x3 grid game with an intelligent AI opponent running the Minimax algorithm, a persistent multi-round scoreboard with LocalStorage, custom Web Audio API sound effects, live turn banners, and winning cell highlight animations.
 
----
+## ✨ Key Features
 
-## 🚀 Features
-
-* ✅ 2 Player Game (X vs O)
-* ✅ Turn-based logic
-* ✅ Winner detection
-* ✅ Draw detection
-* ✅ Reset Game button
-* ✅ New Game option
-* ✅ Prevents multiple clicks on same box
-* ✅ Responsive UI using `vh` and `vmin`
-
----
-
-## 🧠 Game Logic
-
-* Players take turns placing **X** and **O**
-* Winning patterns are predefined
-* After each move:
-
-  * Winner is checked
-  * If all 9 moves are done → Draw
-* Game disables further input after result
-
----
+- **Unbeatable AI Mode**: Implements the recursive Minimax decision algorithm for impossible-to-beat AI gameplay, alongside a casual difficulty mode.
+- **2-Player Local Mode**: Play against friends locally with clear turn indicators.
+- **Persistent Scoreboard**: Tracks Player X wins, Player O wins, and Ties across browser sessions using `localStorage`.
+- **Web Audio Sound Effects**: Synthesized audio feedback for move clicks, winning fanfares, and draw chimes without any external mp3 files.
+- **Winning Streak Animations**: Winning three-in-a-row cells glow with animated pulse effects.
+- **Responsive & Accessible**: Keyboard accessible buttons with high-contrast neon glassmorphism styling.
 
 ## 📁 Project Structure
 
-```
-Tic-Tac-Toe/
-│
-├── index.html     # Structure of the game
-├── style.css      # Styling (responsive using vh & vmin)
-└── app.js         # Game logic
-```
-
----
-
-## 🛠️ Technologies Used
-
-* HTML5
-* CSS3 (Flexbox, Responsive Units)
-* JavaScript (DOM Manipulation)
-
----
-
-## ▶️ How to Run
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/jaikaran109/JavaScript.git
+```text
+02-Tic-Tac-Toe/
+├── index.html       # Semantic layout with scoreboard, game board, and controls
+├── app.js          # Game state, Minimax algorithm, scoreboard, and event handlers
+├── audio.js        # Web Audio API sound synthesizer
+├── style.css       # Modern neon dark theme styling with animations
+└── README.md       # Game documentation
 ```
 
-2. Open the folder:
+## 🎮 How to Play
 
-```
-JavaScript/Tic-Tac-Toe
-```
-
-3. Run `index.html` in your browser
-
----
-
-## 🎯 Future Improvements
-
-* Highlight winning boxes
-* Add sound effects
-* Add AI (Play vs Computer)
-* Improve UI/UX
-
----
-
-## 🙌 Author
-
-**Jai Karan**
-
----
-
-## ⭐ Feedback
-
-If you like this project, consider giving it a ⭐ on GitHub!
+1. Open `index.html` in any web browser.
+2. Select your game mode (**vs AI** or **2 Players**) and difficulty.
+3. Click any square on the 3x3 grid to make your move (Player X goes first).
+4. The first to align 3 symbols horizontally, vertically, or diagonally wins the round.
+5. Use **New Round** to start a new match or **Reset Scores** to wipe historical stats.
