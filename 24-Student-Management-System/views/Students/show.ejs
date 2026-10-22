@@ -1,56 +1,107 @@
-<% layout('Students/layouts/boilerplate.ejs') %>
+<% layout('Students/layouts/boilerPlate') %>
 <%- include('partials/navbar') %>
 
- <div class="row">
-    <div class="col-lg-6 mt-3">
-        <div class="card shadow mx-auto" style="width: 18rem;">
-            <img src="<%=stu.img%>" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Name: <%=stu.name%></h5>
-                <p class="card-text">Roll: <%=stu.roll%></p>
-                <p class="card-text">Section: <%=stu.section%></p>
-                <a href="/students" class="btn btn-info">Home</a>
-                <a href="/students/<%=stu._id%>/edit" class="btn btn-primary">Edit</a>
-   
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- Student Profile Card -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 h-100">
+                <img 
+                    src="<%= stu.img %>" 
+                    class="card-img-top p-4 bg-light" 
+                    alt="<%= stu.name %>"
+                    style="max-height: 260px; object-fit: contain;"
+                    onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"
+                >
+                <div class="card-body">
+                    <h3 class="card-title fw-bold"><%= stu.name %></h3>
+                    <p class="card-text mb-2"><strong>Roll Number:</strong> <%= stu.roll %></p>
+                    <p class="card-text mb-4"><strong>Section:</strong> <span class="badge bg-primary"><%= stu.section %></span></p>
+                    
+                    <div class="d-flex gap-2">
+                        <a href="/students" class="btn btn-outline-secondary">← Back to List</a>
+                        <a href="/students/<%= stu._id %>/edit" class="btn btn-warning">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Performance & Add Marks -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0 p-4 mb-4">
+                <h4 class="fw-bold mb-3">Add Subject Grade</h4>
+                <form action="/students/<%= stu._id %>/marks" method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="subject-select" class="form-label">Subject</label>
+                            <select id="subject-select" class="form-select" name="subject" required>
+                                <option value="" disabled selected>Choose Subject...</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="English">English</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="grade-input" class="form-label">Score / Marks</label>
+                            <input 
+                                id="grade-input"
+                                type="number" 
+                                min="0" 
+                                max="100" 
+                                class="form-control" 
+                                placeholder="0 - 100" 
+                                name="grade" 
+                                required
+                            >
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Subject Scores Table -->
+            <div class="card shadow-sm border-0 p-4">
+                <h4 class="fw-bold mb-3">Academic Results</h4>
+                <% if (stu.marks && stu.marks.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (let mark of stu.marks) { %>
+                                    <tr>
+                                        <td class="fw-semibold"><%= mark.subject %></td>
+                                        <td><strong><%= mark.grade %></strong> / 100</td>
+                                        <td>
+                                            <span class="badge <%= mark.grade >= 40 ? 'bg-success' : 'bg-danger' %>">
+                                                <%= mark.grade >= 40 ? 'Pass' : 'Fail' %>
+                                            </span>
+                                        </td>
+                                        <td class="text-end">
+                                            <form action="/students/<%= stu._id %>/marks/<%= mark._id %>?_method=DELETE" method="POST" class="d-inline">
+                                                <button class="btn btn-outline-danger btn-sm" title="Delete Score">×</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <p class="text-muted mb-0">No subject grades recorded for this student yet.</p>
+                <% } %>
             </div>
         </div>
     </div>
-    <div class="col-lg-6 mx-auto">
-        <h1 class="display-5">Results</h1>
-        <form action="/students/<%=stu._id%>/marks" method="POST">
-            <fieldset>
-               
-                <div class="mb-3">
-                    <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">Subjects</label>
-                    <select class="form-select" id="inputGroupSelect01" name="subject">
-                        <option selected>Choose...</option>
-                        <option value="1">Mathematics</option>
-                        <option value="2">Physics</option>
-                        <option value="3">Chemistry</option>
-                        <option value="4">Biology</option>
-                        <option value="5">Computer Science</option>
-                    </select>
-                    </div>
-                </div>
-               <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Marks</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="grade">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </fieldset>
-        </form>
-        
-
-        <!-- showing marks  -->
-        <div class="my-3">
-            <% for(let x of stu.marks){ %>
-                <div class="card" style="width: 18rem;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><%=x.subject%> : <%=x.marks%></li>
-                    </ul>
-                </div>
-            <% } %>
-        </div>
-    </div>
-</div>                      
+</div>

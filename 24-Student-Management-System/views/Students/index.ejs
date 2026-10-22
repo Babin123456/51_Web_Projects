@@ -1,20 +1,72 @@
-<% layout('Students/layouts/boilerplate.ejs') %>
+<% layout('Students/layouts/boilerPlate') %>
 <%- include('partials/navbar') %>
+
+<div class="container my-4">
+    <!-- Search and Filter Bar -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-7 mb-2 mb-md-0">
+            <form action="/students" method="GET" class="d-flex gap-2">
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="<%= typeof query !== 'undefined' ? query : '' %>" 
+                    class="form-control" 
+                    placeholder="Search by student name or roll number..."
+                >
+                <button type="submit" class="btn btn-primary px-3">Search</button>
+                <% if (typeof query !== 'undefined' && query) { %>
+                    <a href="/students" class="btn btn-outline-secondary">Reset</a>
+                <% } %>
+            </form>
+        </div>
+        <div class="col-md-5 d-flex justify-content-md-end align-items-center gap-2">
+            <label for="section-filter" class="form-label mb-0 fw-bold">Section:</label>
+            <select id="section-filter" class="form-select w-auto" onchange="location = this.value;">
+                <option value="/students" <%= (!activeSection || activeSection === 'ALL') ? 'selected' : '' %>>All Sections</option>
+                <option value="/students?section=A" <%= activeSection === 'A' ? 'selected' : '' %>>Section A</option>
+                <option value="/students?section=B" <%= activeSection === 'B' ? 'selected' : '' %>>Section B</option>
+                <option value="/students?section=C" <%= activeSection === 'C' ? 'selected' : '' %>>Section C</option>
+            </select>
+            <a href="/student/new" class="btn btn-success text-nowrap">+ Add Student</a>
+        </div>
+    </div>
+
+    <!-- Student Cards Grid -->
     <div class="row">
-        <% for(let x of data){ %>
-            <div class="col-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="<%=x.img%>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Name : <%=x.name%></h5>
-                        <p class="card-text">Roll : <%=x.roll%></p>
-                        <p class="card-text">Section : <%=x.section%></p>
-                        <a href="/students/<%=x.id%>" class="btn btn-primary">View Student</a>
-                        <form action="/students/<%=x.id%>?_method=DELETE" method="POST">
-                            <button class="submit btn btn-danger">Delete</button>
-                        </form>
+        <% if (data && data.length > 0) { %>
+            <% for(let x of data){ %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img 
+                            src="<%= x.img %>" 
+                            class="card-img-top p-3 bg-light" 
+                            alt="<%= x.name %>" 
+                            style="height: 180px; object-fit: contain;"
+                            onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"
+                        >
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-truncate"><%= x.name %></h5>
+                            <p class="card-text mb-1"><strong>Roll:</strong> <%= x.roll %></p>
+                            <p class="card-text mb-3"><strong>Section:</strong> <span class="badge bg-secondary"><%= x.section %></span></p>
+                            
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="/students/<%= x.id %>" class="btn btn-outline-primary btn-sm flex-grow-1">View</a>
+                                <a href="/students/<%= x.id %>/edit" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <form action="/students/<%= x.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete <%= x.name %>?');">
+                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            <% } %>
+        <% } else { %>
+            <div class="col-12 text-center py-5">
+                <div class="p-4 bg-light rounded-3">
+                    <p class="lead text-muted mb-3">No student records found matching your query.</p>
+                    <a href="/students" class="btn btn-primary">View All Students</a>
                 </div>
             </div>
         <% } %>
     </div>
+</div>
