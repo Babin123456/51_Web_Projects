@@ -3,22 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Square Game</title>
+    <title>Square Game — Interactive Color & Memory Arena</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main">
-        <div id="box">
-            <div class="rec">
-                <div id="sq1" class="square"><h1>1</h1></div>
-                <div id="sq2" class="square"><h1>2</h1></div>
+    <main class="game-container" role="main">
+        <header class="game-header">
+            <h1>Square Game</h1>
+            <p class="subtitle">Interactive Color Dynamics & Pattern Challenge</p>
+        </header>
+
+        <!-- Top Controls & Scoreboard -->
+        <section class="controls-bar" aria-label="Game Configuration">
+            <div class="mode-group">
+                <label for="game-mode">Mode:</label>
+                <select id="game-mode">
+                    <option value="free" selected>Free Play (Explore)</option>
+                    <option value="memory">Memory Challenge (Simon)</option>
+                </select>
             </div>
-            <div class="rec">
-                <div id="sq3" class="square"><h1>3</h1></div>
-                <div id="sq4" class="square"><h1>4</h1></div>
+            <div class="score-group">
+                <span>Score: <strong id="score-val">0</strong></span>
+                <span>Best: <strong id="high-val">0</strong></span>
             </div>
+            <button id="btn-how-to" class="help-btn" aria-label="Game Instructions">ℹ️ Rules</button>
+        </section>
+
+        <!-- Status Banner -->
+        <div id="game-status" class="status-banner" aria-live="polite">
+            Free Play: Hover or tap squares to explore effects!
+        </div>
+
+        <!-- 2x2 Interactive Squares Grid -->
+        <section id="main" class="squares-grid" aria-label="Squares Grid">
+            <div id="sq1" class="square-box" role="button" tabindex="0" aria-label="Square 1">
+                <h1>1</h1>
+            </div>
+            <div id="sq2" class="square-box" role="button" tabindex="0" aria-label="Square 2">
+                <h1>2</h1>
+            </div>
+            <div id="sq3" class="square-box" role="button" tabindex="0" aria-label="Square 3">
+                <h1>3</h1>
+            </div>
+            <div id="sq4" class="square-box" role="button" tabindex="0" aria-label="Square 4">
+                <h1>4</h1>
+            </div>
+        </section>
+
+        <div class="actions-area">
+            <button id="btn-start-challenge" class="btn start-btn" style="display: none;">Start Challenge</button>
+        </div>
+    </main>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-card">
+            <h2>How to Play</h2>
+            <div class="instructions-content">
+                <p><strong>Free Play Mode:</strong></p>
+                <ul>
+                    <li><strong>Square 1:</strong> Random numbers & colors on interaction.</li>
+                    <li><strong>Square 2:</strong> Alternates between vibrant Red & Green.</li>
+                    <li><strong>Square 3:</strong> Generates dynamic randomized RGB colors.</li>
+                    <li><strong>Square 4:</strong> Triggers a synchronized color wave across all 4 squares!</li>
+                </ul>
+                <p><strong>Memory Challenge:</strong></p>
+                <p>Watch the squares flash in sequence and repeat the exact pattern. Each round adds one more step!</p>
+            </div>
+            <button id="close-modal" class="btn close-btn">Got it!</button>
         </div>
     </div>
+
+    <script src="./audio.js"></script>
     <script src="./script.js"></script>
 </body>
-</html> 
+</html>
