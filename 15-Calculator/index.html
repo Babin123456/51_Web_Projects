@@ -3,56 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+    <title>Scientific Calculator — Safe Math Engine</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <div class="calculator">
-            <input type="text" class="display" id="display" disabled>
-            <div class="buttons">
-                <div class="top">
-                    <button class="sign" data-sign="+">+</button>
-                    <button class="sign" data-sign="-">-</button>
-                    <button class="sign" data-sign="*">&times;</button>
-                    <button class="sign" data-sign="/">&divide;</button>
-                </div>
-                <div id="calculator-body">
-                    <div class="numbers">
-                        <div class="rows">
-                            <button class="number" data-number="7">7</button>
-                            <button class="number" data-number="8">8</button>
-                            <button class="number" data-number="9">9</button>
-                        </div>
-                
-                        <div class="rows">
-                            <button class="number" data-number="4">4</button>
-                            <button class="number" data-number="5">5</button>
-                            <button class="number" data-number="6">6</button>
-                        </div>
-                
-                        <div class="rows">
-                            <button class="number" data-number="1">1</button>
-                            <button class="number" data-number="2">2</button>
-                            <button class="number" data-number="3">3</button>
-                        </div>
-                
-                        <div class="rows">
-                            <button class="number" data-number="0">0</button>
-                            <button class="number" data-number=".">.</button>
-                            <button class="sign" id="clear">AC</button>
-                        </div>
-                    </div>
-                
-                    <div class="right-buttons">
-                        <button class="equal" data-sign="=">=</button>
-                        <button class="sign" id="backspace">⌫</button>
-                    </div>
-                </div>
-                
+    <main class="calculator-wrapper" role="main">
+        <header class="calc-header">
+            <span class="brand-title">Scientific Calculator</span>
+            <button id="btn-toggle-history" class="header-icon-btn" aria-label="Toggle calculation history">🕒 History</button>
+        </header>
+
+        <!-- Display Area -->
+        <section class="display-container" aria-label="Calculator Display">
+            <div class="display-top-bar">
+                <span id="memory-indicator" class="mem-indicator"></span>
+                <span id="secondary-display" class="secondary-text" aria-live="polite"></span>
             </div>
-        </div>
+            <input type="text" id="display" class="main-display" readonly placeholder="0" aria-label="Calculation output">
+        </section>
+
+        <!-- Calculator Keypad -->
+        <section class="keypad" aria-label="Calculator Keypad">
+            <!-- Row 1: Memory & Clear -->
+            <button class="calc-btn fn-btn" data-action="mc" aria-label="Memory Clear">MC</button>
+            <button class="calc-btn fn-btn" data-action="mr" aria-label="Memory Recall">MR</button>
+            <button class="calc-btn fn-btn" data-action="m-plus" aria-label="Memory Add">M+</button>
+            <button class="calc-btn fn-btn" data-action="m-minus" aria-label="Memory Subtract">M-</button>
+
+            <!-- Row 2: Scientific & Clear -->
+            <button class="calc-btn clear-btn" data-action="clear" aria-label="Clear All">C</button>
+            <button class="calc-btn fn-btn" data-action="backspace" aria-label="Backspace">⌫</button>
+            <button class="calc-btn fn-btn" data-action="sqrt" aria-label="Square Root">√</button>
+            <button class="calc-btn op-btn" data-sign="/" aria-label="Divide">÷</button>
+
+            <!-- Row 3 -->
+            <button class="calc-btn fn-btn" data-sign="(" aria-label="Left Parenthesis">(</button>
+            <button class="calc-btn fn-btn" data-sign=")" aria-label="Right Parenthesis">)</button>
+            <button class="calc-btn fn-btn" data-action="power" aria-label="Power">xʸ</button>
+            <button class="calc-btn op-btn" data-sign="*" aria-label="Multiply">×</button>
+
+            <!-- Row 4 -->
+            <button class="calc-btn num-btn" data-number="7">7</button>
+            <button class="calc-btn num-btn" data-number="8">8</button>
+            <button class="calc-btn num-btn" data-number="9">9</button>
+            <button class="calc-btn op-btn" data-sign="-" aria-label="Subtract">−</button>
+
+            <!-- Row 5 -->
+            <button class="calc-btn num-btn" data-number="4">4</button>
+            <button class="calc-btn num-btn" data-number="5">5</button>
+            <button class="calc-btn num-btn" data-number="6">6</button>
+            <button class="calc-btn op-btn" data-sign="+" aria-label="Add">+</button>
+
+            <!-- Row 6 -->
+            <button class="calc-btn num-btn" data-number="1">1</button>
+            <button class="calc-btn num-btn" data-number="2">2</button>
+            <button class="calc-btn num-btn" data-number="3">3</button>
+            <button class="calc-btn fn-btn" data-sign="%" aria-label="Modulo / Percentage">%</button>
+
+            <!-- Row 7 -->
+            <button class="calc-btn num-btn zero-btn" data-number="0">0</button>
+            <button class="calc-btn num-btn" data-number=".">.</button>
+            <button class="calc-btn equal-btn" data-action="equals" aria-label="Calculate Result">=</button>
+        </section>
+
+        <!-- Slide-out History Drawer -->
+        <aside id="history-drawer" class="history-drawer" aria-label="Calculation History">
+            <div class="history-header">
+                <h3>History</h3>
+                <button id="btn-clear-history" class="clear-hist-btn">Clear</button>
+            </div>
+            <ul id="history-list" class="history-list"></ul>
+        </aside>
     </main>
+
+    <script src="./parser.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>
