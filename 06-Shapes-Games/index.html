@@ -3,30 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shapes Game</title>
+    <title>Shape Matcher — Reaction Speed Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="heading">Shapes Game</h1>
-    <div id="main">
-        <div id="box">
-            <div id="square" class="shape"> 
-            <h1>
-                1
-            </h1>
+    <main class="game-container" role="main">
+        <header class="game-header">
+            <h1>Shape Matcher</h1>
+            <p class="tagline">Test your reaction speed & shape recognition</p>
+        </header>
+
+        <!-- Stats HUD -->
+        <section class="hud-bar" aria-label="Game Stats">
+            <div class="hud-item">
+                <span class="hud-label">Score</span>
+                <span id="current-score" class="hud-val">0</span>
+            </div>
+            <div class="hud-item timer-item">
+                <span class="hud-label">Time</span>
+                <span id="timer-value" class="hud-val">30s</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Combo</span>
+                <span id="combo-streak" class="hud-val">0x</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Best</span>
+                <span id="high-score" class="hud-val">0</span>
+            </div>
+        </section>
+
+        <!-- Target Prompt -->
+        <div id="target-prompt" class="target-banner" aria-live="assertive">
+            Press "Start Game" to begin!
         </div>
-        <div id="diamond" class="shape">
-            <h1>
-                2
-            </h1>
+
+        <!-- Shapes Area -->
+        <section id="shapes-grid" class="shapes-arena" aria-label="Shapes Arena">
+            <!-- Rendered by game.js -->
+        </section>
+
+        <div class="controls-area">
+            <button id="btn-start-game" class="btn start-btn">Start Game</button>
         </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-card">
+            <div class="modal-icon">🏆</div>
+            <h2>Time's Up!</h2>
+            <p class="score-summary">You scored <strong id="final-score">0</strong> points!</p>
+            <button id="btn-play-again" class="btn modal-btn">Play Again</button>
         </div>
-        <div id="circle" class="shape">
-            <h1>
-                3
-            </h1>
-        </div>
-        
     </div>
+
+    <script src="./sound.js"></script>
+    <script src="./game.js"></script>
 </body>
 </html>
