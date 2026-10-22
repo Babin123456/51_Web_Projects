@@ -1,59 +1,375 @@
-html, body {
+:root {
+    --bg-main: #090d16;
+    --arena-surface: #111827;
+    --card-surface: #1f2937;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+    --accent-gold: #f59e0b;
+    --text-light: #f3f4f6;
+    --text-muted: #9ca3af;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: white;
+body {
+    background: radial-gradient(circle at top, #1e293b, #090d16);
+    color: var(--text-light);
+    min-height: 100vh;
+    padding-bottom: 40px;
 }
 
-#main {
-    width: 100%;
+.arena-header {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid #374151;
+    padding: 16px 24px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; 
-    gap: 20px; 
-    padding: 40px 0;
+    position: sticky;
+    top: 0;
+    z-index: 40;
 }
 
-.shape {
-    width: 200px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.shape img {
-    width: 150px;
-    height: 150px;
+.logo h1 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.turn-status {
+    background: #1e3a8a;
+    color: #93c5fd;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #3b82f6;
+}
+
+.battleground {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Roster Section */
+.roster-section {
+    background: var(--arena-surface);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.roster-section h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.deck-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.deck-choice {
+    background: #1f2937;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.deck-choice img {
+    width: 36px;
+    height: 36px;
     object-fit: contain;
 }
 
-.shape:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-color: #007bff; 
+.deck-choice:hover {
+    transform: translateY(-2px);
+    border-color: #60a5fa;
 }
 
-.shape h3 {
-    margin: 10px 0 5px 0;
-    color: #333;
+.deck-choice.selected {
+    border-color: var(--accent-gold);
+    background: #374151;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
 }
 
-.shape p {
-    margin: 0;
-    color: #666;
+/* Stadium */
+.stadium {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid #374151;
+    border-radius: 24px;
+    padding: 24px 16px;
+    position: relative;
+    gap: 16px;
+}
+
+.clash-badge {
+    background: #ef4444;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    flex-shrink: 0;
+}
+
+.combatant-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 40%;
+}
+
+.hp-panel {
+    width: 100%;
+    max-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fighter-tag {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.hp-bar-container {
+    background: #374151;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.hp-fill {
+    height: 100%;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.hp-fill.healthy { background: #22c55e; }
+.hp-fill.warning { background: #eab308; }
+.hp-fill.danger { background: #ef4444; }
+
+.hp-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+/* Battle Card Slot */
+.battle-card-slot {
+    width: 100%;
+    max-width: 220px;
+    transition: transform 0.2s;
+}
+
+.battle-card-slot.taking-hit {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+.card-inner {
+    background: var(--card-surface);
+    border: 2px solid #4b5563;
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.card-type-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.card-type-badge.electric { background: #eab308; color: #000; }
+.card-type-badge.fire { background: #ef4444; }
+.card-type-badge.water { background: #3b82f6; }
+.card-type-badge.grass { background: #22c55e; }
+.card-type-badge.ghost { background: #6366f1; }
+.card-type-badge.psychic { background: #ec4899; }
+
+.card-artwork {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.card-artwork img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}
+
+.card-moves {
+    width: 100%;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 1px solid #374151;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Controls */
+.controls-panel {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+    color: #fff;
+}
+
+.action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.action-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+}
+
+.attack-btn {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.special-btn {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.reset-btn {
+    background: #374151;
+    color: #d1d5db;
+}
+
+/* Combat Log */
+.log-section {
+    background: var(--arena-surface);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.log-section h3 {
     font-size: 14px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.log-scroll {
+    height: 140px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-entry {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #1f2937;
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.log-entry.player { border-left: 3px solid #3b82f6; }
+.log-entry.cpu { border-left: 3px solid #ef4444; }
+.log-entry.event { border-left: 3px solid #f59e0b; color: #fde68a; }
+.log-entry.victory { border-left: 3px solid #22c55e; color: #86efac; font-weight: 700; }
+.log-entry.defeat { border-left: 3px solid #ef4444; color: #fca5a5; font-weight: 700; }
+
+@media (max-width: 680px) {
+    .stadium {
+        flex-direction: column;
+    }
+    .combatant-zone {
+        width: 100%;
+    }
+    .clash-badge {
+        margin: 10px 0;
+    }
 }

@@ -3,38 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Cards Project</title>
+    <title>Pokémon Card Duel Arena</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Pokemon Gallery</h1>
+    <header class="arena-header">
+        <div class="logo">
+            <span class="badge">⚔️</span>
+            <h1>Pokémon Card Duel Arena</h1>
+        </div>
+        <div id="turn-indicator" class="turn-status">Select Your Fighter</div>
     </header>
 
-    <main id="main">
-        <div class="shape">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu">
-            <h3>Pikachu</h3>
-            <p>Type: Electric</p>
-        </div>
+    <main class="battleground">
+        <!-- Deck Selection Drawer -->
+        <section class="roster-section" aria-label="Choose your Pokémon">
+            <h2>Choose Your Pokémon</h2>
+            <div id="player-deck" class="deck-strip"></div>
+        </section>
 
-        <div class="shape">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander">
-            <h3>Charmander</h3>
-            <p>Type: Fire</p>
-        </div>
+        <!-- Battle Stadium -->
+        <section class="stadium" aria-label="Battle Stadium">
+            <!-- CPU Side -->
+            <div class="combatant-zone cpu-zone">
+                <div class="hp-panel">
+                    <div class="fighter-tag">CPU Opponent</div>
+                    <div class="hp-bar-container">
+                        <div id="cpu-hp-bar" class="hp-fill healthy" style="width: 100%;"></div>
+                    </div>
+                    <span id="cpu-hp-text" class="hp-text">100 / 100 HP</span>
+                </div>
+                <div id="cpu-active-card" class="battle-card-slot"></div>
+            </div>
 
-        <div class="shape">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Bulbasaur">
-            <h3>Bulbasaur</h3>
-            <p>Type: Grass/Poison</p>
-        </div>
+            <div class="clash-badge">VS</div>
 
-        <div class="shape">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="Squirtle">
-            <h3>Squirtle</h3>
-            <p>Type: Water</p>
-        </div>
+            <!-- Player Side -->
+            <div class="combatant-zone player-zone">
+                <div id="player-active-card" class="battle-card-slot"></div>
+                <div class="hp-panel">
+                    <div class="fighter-tag">Your Pokémon</div>
+                    <div class="hp-bar-container">
+                        <div id="player-hp-bar" class="hp-fill healthy" style="width: 100%;"></div>
+                    </div>
+                    <span id="player-hp-text" class="hp-text">100 / 100 HP</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Controls -->
+        <section class="controls-panel" aria-label="Combat Controls">
+            <button id="btn-attack" class="action-btn attack-btn" aria-label="Standard Attack">
+                ⚔️ Quick Attack
+            </button>
+            <button id="btn-special" class="action-btn special-btn" aria-label="Special Move Attack">
+                ⚡ Elemental Burst
+            </button>
+            <button id="btn-new-duel" class="action-btn reset-btn" aria-label="Rematch Duel">
+                🔄 Rematch
+            </button>
+        </section>
+
+        <!-- Combat Log -->
+        <section class="log-section" aria-label="Combat Log">
+            <h3>Combat Log</h3>
+            <div id="battle-log" class="log-scroll"></div>
+        </section>
     </main>
+
+    <script src="./cards-data.js"></script>
+    <script src="./game.js"></script>
 </body>
 </html>
