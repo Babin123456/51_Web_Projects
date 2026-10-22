@@ -3,105 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Tribute Website | A.P.J Abdul Kalam</title>
-    <link rel="stylesheet" href="Tribute_Style.css">
-
+    <title>A.P.J. Abdul Kalam Tribute — Missile Man of India</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-
-
-    <div class="container">
-        <div class="content">
-            <section class="top_section">
+    <main class="container" role="main">
+        <article class="content">
+            <!-- Hero Header -->
+            <header class="top_section">
                 <div class="image_container">
-                    <img src="./image/apj.png" alt="tribute"/>
+                    <img src="./A._P._J._Abdul_Kalam.jpg.webp" alt="Dr. A.P.J. Abdul Kalam portrait" class="hero-image">
                 </div>
-                <div>
-                    <h1>A. P. J Abdul Kalam</h1>
-                    <h4>1931 - 2015</h4>
+                <div class="header-titles">
+                    <h1>Dr. A.P.J. Abdul Kalam</h1>
+                    <p class="lifespan">15 October 1931 – 27 July 2015</p>
+                    <span class="honorific-badge">Bharat Ratna & 11th President of India</span>
+                </div>
+            </header>
+
+            <!-- Quotes Showcase -->
+            <section class="quotes_section" aria-label="Inspiring Quotes">
+                <div class="quote-card">
+                    <span class="quote-mark">“</span>
+                    <blockquote id="quote-text" class="quote-text">Loading inspiring thought...</blockquote>
+                    <p id="quote-context" class="quote-context"></p>
+                    <div class="quote-actions">
+                        <button id="btn-next-quote" class="quote-btn primary" aria-label="Next quote">Shuffle Quote ↻</button>
+                        <button id="btn-copy-quote" class="quote-btn secondary" aria-label="Copy quote to clipboard">Copy 📋</button>
+                    </div>
                 </div>
             </section>
+
+            <!-- Biography Overview -->
             <section class="about_section">
-                <h2>Missile Man of India</h2>
+                <h2>Missile Man & People's President</h2>
                 <p>
-                    <b>Avul Pakir Jainulabdeen Abdul Kalam</b>(
-                    15 October 1931 – 27 July 2015) was 
-                    an Indian aerospace scientist and statesman 
-                    who served as the president of India from 2002 to 2007.
-                    Born and raised in a Muslim family in Rameswaram, 
-                    Tamil Nadu, Kalam studied physics and aerospace engineering. He spent the next four decades as a scientist and science administrator, mainly at the Defence Research and Development Organisation (DRDO) and Indian Space Research Organisation (ISRO) and was intimately involved in India's civilian space programme and military missile development efforts. He was known as the "Missile Man of India" for his work on the development of ballistic missile and launch vehicle technology. He also played a pivotal organisational, technical, and political role in Pokhran-II nuclear tests in 1998, India's second such test after the first test in 1974.
+                    <b>Avul Pakir Jainulabdeen Abdul Kalam</b> was an Indian aerospace scientist and statesman who served as the 11th President of India from 2002 to 2007.
+                </p>
+                <p>
+                    Born in Rameswaram, Tamil Nadu, he studied physics and aerospace engineering before spending four decades as a scientist and administrator, predominantly at the <b>Defence Research and Development Organisation (DRDO)</b> and the <b>Indian Space Research Organisation (ISRO)</b>. Kalam led India's civilian space program and missile development efforts, playing key roles in the SLV-III launch and the Pokhran-II nuclear tests.
                 </p>
             </section>
-            <section class="biography_section">
-                <h3>Biographies</h3>
-                <ul>
-                    <li>
-                        Etern<ul>
-                                    <li>
-                                    Eternal Quest: Life and Times of Dr Kalam by S Chandra; Pentagon
-                                    Publishers, 2002.
-                                    </li>
-                                    <li>
-                                    President A P J Abdul Kalam by R K Pruthi; Anmol Publications,
-                                    2002.
-                                    </li>
-                                    <li>
-                                    A P J Abdul Kalam: The Visionary of India by K Bhushan, G Katyal;
-                                    A P H Pub Corp, 2002.
-                                    </li>
-                                    <li>
-                                    A Little Dream (documentary film) by P. Dhanapal; Minveli Media
-                                    Works Private Limited, 2008.
-                                    </li>
-                                    <li>
-                                    The Kalam Effect: My Years with the President by P M Nair; Harper
-                                    Collins, 2008.
-                                    </li>
-                                    <li>
-                                    My Days With Mahatma Abdul Kalam by Fr A K George; Novel
-                                    Corporation, 2009.
-                                    </li>
-                                    <li>
-                                    A.P.J. Abdul Kalam: A Life by Arun Tiwari; Haper Collins, 2015.
-                                    </li>
-                                    <li>
-                                    The People's President: Dr A P J Abdul Kalam by S M Khan;
-                                    Bloomsbury Publishing, 2016.
-                                    </li>
-                                </ul>al Quest: Life and Times of Dr Kalam by S Chandra; Pentagon
-                        Publishers, 2002.
-                    </li>
-                    <li>
-                        President A P J Abdul Kalam by R K Pruthi; Anmol Publications,
-                    2002.
-                    </li>
-                    <li>
-                        A P J Abdul Kalam: The Visionary of India by K Bhushan, G Katyal;
-                        A P H Pub Corp, 2002.
-                    </li>
-                    <li>
-                        A Little Dream (documentary film) by P. Dhanapal; Minveli Media
-                        Works Private Limited, 2008.
-                    </li>
-                    <li>
-                        The Kalam Effect: My Years with the President by P M Nair; Harper
-                        Collins, 2008.
-                    </li>
-                    <li>
-                        My Days With Mahatma Abdul Kalam by Fr A K George; Novel
-                        Corporation, 2009.
-                    </li>
-                    <li>
-                        A.P.J. Abdul Kalam: A Life by Arun Tiwari; Haper Collins, 2015.
-                    </li>
-                    <li>
-                        The People's President: Dr A P J Abdul Kalam by S M Khan;
-                        Bloomsbury Publishing, 2016.
-                    </li>
-                </ul>   
+
+            <!-- Interactive Milestones Timeline -->
+            <section class="timeline_section" aria-label="Career Milestones">
+                <h3>Life & Legacy Timeline</h3>
+                <div class="timeline-filters">
+                    <button class="timeline-filter-btn active" data-category="All">All</button>
+                    <button class="timeline-filter-btn" data-category="Early Life">Early Life</button>
+                    <button class="timeline-filter-btn" data-category="DRDO & ISRO">DRDO & ISRO</button>
+                    <button class="timeline-filter-btn" data-category="Presidency">Presidency</button>
+                    <button class="timeline-filter-btn" data-category="Legacy">Legacy</button>
+                </div>
+                <div id="timeline-list" class="timeline-container">
+                    <!-- Rendered by timeline.js -->
+                </div>
             </section>
-        </div>
-    </div>
+
+            <!-- Curated Works & Biographies -->
+            <section class="biography_section">
+                <h3>Notable Biographies & Works</h3>
+                <ul class="biography-list">
+                    <li><strong>Wings of Fire</strong> — An Autobiography by Dr. A.P.J. Abdul Kalam & Arun Tiwari (Universities Press, 1999)</li>
+                    <li><strong>Ignited Minds</strong>: Unleashing the Power Within India by Dr. A.P.J. Abdul Kalam (Penguin Books, 2002)</li>
+                    <li><strong>India 2020</strong>: A Vision for the New Millennium by Dr. A.P.J. Abdul Kalam & Y.S. Rajan (Penguin Books, 1998)</li>
+                    <li><strong>Eternal Quest</strong>: Life and Times of Dr. Kalam by S. Chandra (Pentagon Publishers, 2002)</li>
+                    <li><strong>The Kalam Effect</strong>: My Years with the President by P.M. Nair (HarperCollins, 2008)</li>
+                    <li><strong>The People's President</strong>: Dr. A.P.J. Abdul Kalam by S.M. Khan (Bloomsbury, 2016)</li>
+                </ul>
+            </section>
+        </article>
+    </main>
+
+    <script src="./quotes.js"></script>
+    <script src="./timeline.js"></script>
 </body>
 </html>
