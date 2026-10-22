@@ -1,52 +1,165 @@
-let main = document.getElementById("main");
-let arr = ["https://i.pinimg.com/736x/9c/22/88/9c2288407d7048fbb73e4a736dc4306d.jpg",
-"https://i.pinimg.com/1200x/97/24/33/972433f775c86ff59a74bedc8d2b2d10.jpg",
-"https://i.pinimg.com/1200x/2b/12/2b/2b122b3a66e352bfa972222091e1f9dd.jpg",
-"https://i.pinimg.com/1200x/ff/25/8d/ff258d31fe5226d084c41dce77650503.jpg",
-"https://i.pinimg.com/736x/2d/a3/e2/2da3e25b594272fadb7076899bcae1d6.jpg",
-"https://i.pinimg.com/736x/f7/c2/d0/f7c2d0c26e1011ba29e14a09a4c5b18f.jpg",
-"https://i.pinimg.com/736x/ef/2a/da/ef2ada4e54421188917785af29aedf50.jpg"];
+// Pokemon Card Collection & Pokedex Logic
+const cardsContainer = document.getElementById("main");
+const searchInput = document.getElementById("search-input");
+const filterPills = document.querySelectorAll(".filter-pill");
+const favoritesCountSpan = document.getElementById("fav-count");
+const modal = document.getElementById("card-modal");
+const modalBody = document.getElementById("modal-body");
+const closeModalBtn = document.getElementById("close-modal");
 
-const main = document.getElementById("main");
+const FAVORITES_KEY = "pokemon_card_favorites";
+let favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"));
+let activeType = "All";
+let searchQuery = "";
 
-const arr = [
-    "https://i.pinimg.com/736x/9c/22/88/9c2288407d7048fbb73e4a736dc4306d.jpg",
-    "https://i.pinimg.com/1200x/97/24/33/972433f775c86ff59a74bedc8d2b2d10.jpg",
-    "https://i.pinimg.com/1200x/2b/12/2b/2b122b3a66e352bfa972222091e1f9dd.jpg",
-    "https://i.pinimg.com/1200x/ff/25/8d/ff258d31fe5226d084c41dce77650503.jpg",
-    "https://i.pinimg.com/736x/2d/a3/e2/2da3e25b594272fadb7076899bcae1d6.jpg",
-    "https://i.pinimg.com/736x/f7/c2/d0/f7c2d0c26e1011ba29e14a09a4c5b18f.jpg",
-    "https://i.pinimg.com/736x/ef/2a/da/ef2ada4e54421188917785af29aedf50.jpg"
-];
+const fallbackImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png";
 
-const fallbackImage =
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png";
-
-for (let i = 1; i <= 55; i++) {
-    const card = document.createElement("div");
-    card.className = "cards";
-
-    const img = document.createElement("img");
-    img.alt = `Pokemon card ${i}`;
-
-    img.addEventListener("error", function () {
-        if (img.dataset.fallbackApplied !== "true") {
-            img.dataset.fallbackApplied = "true";
-            img.src = fallbackImage;
-            return;
-        }
-
-        img.remove();
-        card.classList.add("image-unavailable");
-        card.textContent = "Image unavailable";
-    });
-
-    const randomIndex = Math.floor(Math.random() * arr.length);
-    img.src = arr[randomIndex];
-
-    card.appendChild(img);
-    main.appendChild(card);
+function updateFavoritesBadge() {
+    if (favoritesCountSpan) {
+        favoritesCountSpan.textContent = favorites.size;
+    }
 }
 
+function toggleFavorite(pokemonId, event) {
+    if (event) event.stopPropagation();
 
+    if (favorites.has(pokemonId)) {
+        favorites.delete(pokemonId);
+    } else {
+        favorites.add(pokemonId);
+    }
 
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favorites)));
+    updateFavoritesBadge();
+    renderCards();
+}
+
+function openPokemonModal(pokemon) {
+    if (!modal || !modalBody) return;
+
+    modalBody.innerHTML = `
+        <div class="modal-card type-${pokemon.type.toLowerCase()}">
+            <div class="modal-badge">#${String(pokemon.id).padStart(3, "0")}</div>
+            <img class="modal-img" src="${pokemon.sprite}" alt="${pokemon.name}">
+            <h2>${pokemon.name}</h2>
+            <span class="type-tag ${pokemon.type.toLowerCase()}">${pokemon.type}</span>
+            <p class="modal-desc">${pokemon.description}</p>
+            <div class="stats-grid">
+                <div class="stat-item"><span class="stat-name">HP</span><span class="stat-val">${pokemon.hp}</span></div>
+                <div class="stat-item"><span class="stat-name">Attack</span><span class="stat-val">${pokemon.attack}</span></div>
+                <div class="stat-item"><span class="stat-name">Defense</span><span class="stat-val">${pokemon.defense}</span></div>
+                <div class="stat-item"><span class="stat-name">Speed</span><span class="stat-val">${pokemon.speed}</span></div>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+    if (!modal) return;
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+}
+
+function renderCards() {
+    if (!cardsContainer) return;
+    cardsContainer.innerHTML = "";
+
+    const filtered = POKEMON_DATA.filter(poke => {
+        const matchesType = activeType === "All" || (activeType === "Favorites" ? favorites.has(poke.id) : poke.type === activeType);
+        const matchesSearch = poke.name.toLowerCase().includes(searchQuery.toLowerCase()) || String(poke.id).includes(searchQuery);
+        return matchesType && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+        cardsContainer.innerHTML = `
+            <div class="empty-state">
+                <p>No Pokémon found matching your criteria.</p>
+            </div>
+        `;
+        return;
+    }
+
+    filtered.forEach(pokemon => {
+        const isFav = favorites.has(pokemon.id);
+        const card = document.createElement("div");
+        card.className = `pokemon-card type-${pokemon.type.toLowerCase()}`;
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `View details for ${pokemon.name}`);
+
+        card.innerHTML = `
+            <button class="fav-btn ${isFav ? "active" : ""}" aria-label="Favorite ${pokemon.name}" title="Favorite">
+                ${isFav ? "★" : "☆"}
+            </button>
+            <span class="card-id">#${String(pokemon.id).padStart(3, "0")}</span>
+            <div class="card-img-wrapper">
+                <img src="${pokemon.sprite}" alt="${pokemon.name}" loading="lazy">
+            </div>
+            <h3 class="card-name">${pokemon.name}</h3>
+            <span class="type-pill ${pokemon.type.toLowerCase()}">${pokemon.type}</span>
+            <div class="card-mini-stats">
+                <span>HP ${pokemon.hp}</span>
+                <span>ATK ${pokemon.attack}</span>
+            </div>
+        `;
+
+        const img = card.querySelector("img");
+        img.addEventListener("error", () => {
+            img.src = fallbackImage;
+        });
+
+        const favBtn = card.querySelector(".fav-btn");
+        favBtn.addEventListener("click", (e) => toggleFavorite(pokemon.id, e));
+
+        card.addEventListener("click", () => openPokemonModal(pokemon));
+        card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openPokemonModal(pokemon);
+            }
+        });
+
+        cardsContainer.appendChild(card);
+    });
+}
+
+// Event Listeners
+document.addEventListener("DOMContentLoaded", () => {
+    updateFavoritesBadge();
+    renderCards();
+
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            searchQuery = e.target.value.trim();
+            renderCards();
+        });
+    }
+
+    filterPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            filterPills.forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+            activeType = pill.dataset.type;
+            renderCards();
+        });
+    });
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", closeModal);
+    }
+
+    if (modal) {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal && modal.classList.contains("active")) {
+            closeModal();
+        }
+    });
+});
