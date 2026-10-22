@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter</title>
+    <title>Universal Currency Converter</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="container">
-        <h1>Currency Converter</h1>
-        <div class="currency-container">
-            <!-- for input  -->
-            <select id="currency-first">
-                <option value="AUD">AUD</option>
-                <option value="CAD">CAD</option>
-                <option value="EUR">EUR</option>
-                <option value="USD" selected>USD</option>  <!--By default , it is selected-->
-                <option value="INR">INR</option>
-                <option value="GBP">GBP</option>
-                <option value="JPY">JPY</option>
-            </select>
-            <input type="number" id="worth-first" value="1" min="0">
-        </div>
-        <div class="currency-container">
-            <!-- for output -->
-            <select id="currency-second">
-                <option value="AUD">AUD</option>
-                <option value="CAD">CAD</option>
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>  <!--By default , it is selected-->
-                <option value="INR" selected>INR</option>
-                <option value="GBP">GBP</option>
-                <option value="JPY">JPY</option>
-            </select>
-            <input type="number" id="worth-second" disabled>
-        </div>
-<<<<<<< HEAD:16-Currency-Converter/index.html
-        <p class="exchange-rate" id="exchange-rate">1 USD = 85 INR</p>  <!-- ohh maah bad its 94.70 -->
-=======
-        <p class="exchange-rate" id="exchange-rate">1 USD = 85 INR</p>
-        <p class="error-message" id="error-message" aria-live="assertive"></p>
->>>>>>> be133af22faf9ea1c593901bcab023b3b2506cf1:16-Currency- Coverter/index.html
+    <main class="container" role="main">
+        <header class="converter-header">
+            <div class="icon-badge">💱</div>
+            <h1>Currency Converter</h1>
+            <p class="subtitle">Real-time global exchange rates</p>
+        </header>
+
+        <section class="card" aria-label="Currency conversion form">
+            <div class="currency-group">
+                <label for="currency-first" class="sr-only">Source Currency</label>
+                <select id="currency-first" aria-label="Select source currency"></select>
+                <div class="input-wrapper">
+                    <input type="number" id="worth-first" value="1" min="0" step="any" placeholder="0.00" aria-label="Amount to convert">
+                </div>
+            </div>
+
+            <div class="swap-wrapper">
+                <button id="swap-btn" type="button" class="swap-btn" title="Swap currencies" aria-label="Swap source and target currencies">
+                    ⇄
+                </button>
+            </div>
+
+            <div class="currency-group">
+                <label for="currency-second" class="sr-only">Target Currency</label>
+                <select id="currency-second" aria-label="Select target currency"></select>
+                <div class="input-wrapper">
+                    <input type="number" id="worth-second" placeholder="0.00" disabled aria-label="Converted amount">
+                </div>
+            </div>
+
+            <div class="info-footer">
+                <p class="exchange-rate" id="exchange-rate" aria-live="polite">Calculating rate...</p>
+                <p class="status-message" id="status-message" aria-live="assertive"></p>
+                <span class="last-updated" id="last-updated">Live</span>
+            </div>
+        </section>
     </main>
+
+    <script src="./currencies.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>
