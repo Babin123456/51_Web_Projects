@@ -54,7 +54,7 @@ body {
     margin-top: 50px;
     height: min(28.2vw, 141px);
     width: min(28.2vw, 141px);
-    translate: 30px;
+    translate: 0;
 }
 
 #diamond h1 {
