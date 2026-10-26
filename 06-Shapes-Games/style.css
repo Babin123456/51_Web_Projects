@@ -52,9 +52,9 @@ body {
 #diamond {
     rotate: 45deg;
     margin-top: 50px;
-    height: 141px;
-    width: 141px;
-    translate: 30px; /* for x and y axis movement */
+    height: min(28.2vw, 141px);
+    width: min(28.2vw, 141px);
+    translate: 30px;
 }
 
 #diamond h1 {
