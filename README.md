@@ -68,6 +68,7 @@ The goal of this repository is to:
 | 23 | Spotify Project |
 | 24 | Student Management System |
 | 25 | UI Project Using Tailwind |
+| 26 | AI-Powered Smart Food Donation & Distribution System |
 
 > 📖 See the [Project Table](#project-table) for more details.
 
@@ -132,6 +133,7 @@ Choose any project folder and open the `index.html` file in your browser.
 ├── 23-Spotify-Project
 ├── 24-Student-Management-System
 ├── 25-UI-Project-Using-Tailwind
+├── 26-AI-Powered-Smart-Food-Donation-Distribution-System
 │
 ├── scripts/            # Automation scripts for GitHub issues
 ├── CODE_OF_CONDUCT.md
@@ -172,6 +174,7 @@ Choose any project folder and open the `index.html` file in your browser.
 | 23 | Spotify Project | HTML, CSS, JS, Node.js | Full Stack | ✅ Complete |
 | 24 | Student Management System | HTML, CSS, JS, Node.js, MongoDB | Full Stack | ✅ Complete |
 | 25 | UI Project Using Tailwind | HTML, CSS, JS, React | React + Vite + Tailwind | ✅ Complete |
+| 26 | AI-Powered Smart Food Donation & Distribution System | HTML, CSS, JS, React, Node.js, MongoDB | Full Stack | ✅ Complete |
 
 ---
 
@@ -210,6 +213,7 @@ Choose any project folder and open the `index.html` file in your browser.
 ├── 23-Spotify-Project
 ├── 24-Student-Management-System
 ├── 25-UI-Project-Using-Tailwind
+├── 26-AI-Powered-Smart-Food-Donation-Distribution-System
 │
 ├── scripts/            # Automation scripts for GitHub issues
 ├── CODE_OF_CONDUCT.md
