@@ -1,5 +1,5 @@
 # Security Policy
-
+ 
 ## 🔒 Reporting a Vulnerability
 
 We take security seriously. If you discover a security vulnerability in this project, please report it responsibly.

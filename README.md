@@ -70,7 +70,6 @@ The goal of this repository is to:
 | 25 | UI Project Using Tailwind |
 | 26 | AI-Powered Smart Food Donation & Distribution System |
 
-> 📖 See the [Project Table](#project-table) for more details.
 
 ---
 

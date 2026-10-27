@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock-Paper-Scissors</title>
-    <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem("theme"); } catch (e) { }
+            if (theme !== "light" && theme !== "dark") {
+                theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
 </head>
+
 <body>
     <h1>Rock Paper Scissors</h1>
+    <button id="theme-toggle" type="button" aria-label="Switch to dark mode">🌙</button>
+
     <div class="choices">
-        <div class="choice" id="rock">
-            <img src="./images/rock.png">
+        <div class="choice" id="rock" aria-keyshortcuts="R">
+            <img src="./images/rock.png" alt="Rock">
         </div>
-        <div class="choice" id="paper">
-            <img src="./images/paper.png">
+        <div class="choice" id="paper" aria-keyshortcuts="P">
+            <img src="./images/paper.png" alt="Paper">
         </div>
-        <div class="choice" id="scissors">
-            <img src="./images/scissors.png">
+        <div class="choice" id="scissors" aria-keyshortcuts="S">
+            <img src="./images/scissors.png" alt="Scissors">
         </div>
     </div>
     <div class="score-board">
@@ -33,6 +48,9 @@
     <div class="msg-container">
         <p id="msg">Pick your Move !</p>
     </div>
+
+    <p class="shortcut-hint">Tip: press <kbd>R</kbd>, <kbd>P</kbd> or <kbd>S</kbd> to play</p>
     <script src="app.js"></script>
 </body>
+
 </html>
