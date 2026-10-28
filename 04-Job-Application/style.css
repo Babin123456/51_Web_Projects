@@ -3,15 +3,16 @@
     padding: 0;
     box-sizing: border-box;
 }
-.apply-box{
+
+.apply-box {
     max-width: 600px;
     padding: 20px;
     background-color: white;
-    margin: 0 auto;
-    margin-top:50px;
-    box-shadow: 4px 3px 5px rgba(1,1,1,0.1);
+    margin: 50px auto 32px;
+    box-shadow: 4px 3px 5px rgba(1, 1, 1, 0.1);
     border-radius: 10px;
 }
+
 .title-small{
     font-size: 20px;
 }
@@ -34,9 +35,14 @@ input,select,textarea{
     border-radius: 4px;
     font-size: 15px;
 }
-input:focus{
-    outline-color: red;
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #1a56db;
+    outline-offset: 2px;
 }
+
 .button-container{
     display: flex;
     justify-content: flex-end;
@@ -50,13 +56,15 @@ button{
     border-radius: 8px;
     transition: 0.3s ease-in;
 }
-button:hover{
-    background-color: #ccc;
-    border: 2px solid red;
-    color: black;
+
+button:hover {
+    background-color: #b91c1c;
+    border: 2px solid #aa2222;
+    color: white;
     transition: 0.3s ease-out;
     cursor: pointer;
 }
+
 .textarea_control{
     grid-column: 1 / span 2;
 }
@@ -67,6 +75,12 @@ button:hover{
     .textarea_control{
         grid-column: 1 / span 1;
 }
+
+.apply-box {
+    margin: 16px 12px 24px;
+    padding: 16px;
+}
+
 }
 
 /* ---------- Accessibility & validation ---------- */
